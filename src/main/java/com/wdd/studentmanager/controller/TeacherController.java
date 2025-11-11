@@ -35,7 +35,7 @@ public class TeacherController {
 
     @RequestMapping("/teacher_list")
     public String teacherList(){
-        return "/teacher/teacherList";
+        return "teacher/teacherList";
     }
 
     /**
