@@ -37,7 +37,7 @@ public class ClazzController {
      */
     @GetMapping("/clazz_list")
     public String clazzList(){
-        return "/clazz/clazzList";
+        return "clazz/clazzList";
     }
 
     /**

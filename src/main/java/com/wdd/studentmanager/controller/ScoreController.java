@@ -53,7 +53,7 @@ public class ScoreController {
 
     @GetMapping("/score_list")
     public String scoreList(){
-        return "/score/scoreList";
+        return "score/scoreList";
     }
 
 
@@ -310,7 +310,7 @@ public class ScoreController {
      */
     @RequestMapping("/scoreStats")
     public String scoreStats(){
-        return "/score/scoreStats";
+        return "score/scoreStats";
     }
 
 

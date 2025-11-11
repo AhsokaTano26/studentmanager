@@ -39,7 +39,7 @@ public class StudentController {
      */
     @GetMapping("/student_list")
     public String studentList(){
-        return "/student/studentList";
+        return "student/studentList";
     }
 
     /**

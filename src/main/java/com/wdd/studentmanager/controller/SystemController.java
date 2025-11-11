@@ -163,7 +163,7 @@ public class SystemController {
      */
     @GetMapping("/index")
     public String index(){
-        return "/system/index";
+        return "system/index";
     }
 
 
@@ -175,7 +175,7 @@ public class SystemController {
     @GetMapping("/logout")
     public String logout(HttpSession session){
         session.invalidate();
-        return "/login";
+        return "login";
     }
 
 
@@ -207,7 +207,7 @@ public class SystemController {
 
     @GetMapping("/personalView")
     public String personalView(){
-        return "/system/personalView";
+        return "system/personalView";
     }
 
 

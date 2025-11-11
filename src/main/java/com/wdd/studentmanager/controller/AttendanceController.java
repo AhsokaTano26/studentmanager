@@ -38,7 +38,7 @@ public class AttendanceController {
 
     @GetMapping("/attendance_list")
     public String attendanceList(){
-        return "/attendance/attendanceList";
+        return "attendance/attendanceList";
     }
 
 

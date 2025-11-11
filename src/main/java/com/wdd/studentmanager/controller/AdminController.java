@@ -15,6 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminController {
     @GetMapping("/list")
     public String list(){
-        return "/admin/admin_list";
+        return "admin/admin_list";
     }
 }
