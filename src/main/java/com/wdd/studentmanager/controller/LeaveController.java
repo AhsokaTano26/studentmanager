@@ -30,7 +30,7 @@ public class LeaveController {
 
     @RequestMapping("leave_list")
     public String leaveList(){
-        return "/leave/leaveList";
+        return "leave/LeaveList";
     }
 
     /**
