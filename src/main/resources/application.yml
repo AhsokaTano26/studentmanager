@@ -1,10 +1,10 @@
 spring:
   datasource:
     # openGauss 驱动
-    driver-class-name: org.opengauss.Driver
+    driver-class-name: org.postgresql.Driver
 
     # openGauss 连接 URL
-    url: jdbc:opengauss://113.45.31.200:8888/studentmanager?param1=value1
+    url: jdbc:postgresql://113.45.31.200:8888/studentmanager?param1=value1
 
     # openGauss 用户名密码，根据你的实际情况修改
     username: springboot
