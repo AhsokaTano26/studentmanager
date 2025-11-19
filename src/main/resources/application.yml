@@ -4,7 +4,7 @@ spring:
     driver-class-name: org.opengauss.Driver
 
     # openGauss 连接 URL
-    url: jdbc:opengauss://127.0.0.1:8888/studentmanager
+    url: jdbc:opengauss://113.45.31.200:8888/studentmanager?param1=value1
 
     # openGauss 用户名密码，根据你的实际情况修改
     username: springboot
