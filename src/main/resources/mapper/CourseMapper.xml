@@ -55,7 +55,7 @@
         UPDATE s_course
         SET selected_num = (CASE
         WHEN selected_num = max_num THEN 50
-        WHEN selected_num < max_num THEN selected_num + 1
+        WHEN selected_num &lt; max_num THEN selected_num + 1
         END)
         WHERE id = #{courseId}
     </update>
