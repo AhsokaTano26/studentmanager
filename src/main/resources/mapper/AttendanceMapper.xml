@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wdd.studentmanager.mapper.AttendanceMapper">
+
+    <resultMap type="com.wdd.studentmanager.domain.Attendance" id="AttendanceInfo">
+        <result column="id" property="id"/>
+        <result column="course_id" property="courseId"/>
+        <result column="student_id" property="studentId"/>
+        <result column="type" property="type"/>
+        <result column="date" property="date"/>
+    </resultMap>
+
+    <select id="queryList" resultMap="AttendanceInfo">
+        SELECT * FROM s_attendance
+        <where>
+            <if test="courseid != null">AND course_id = #{courseid}</if>
+            <if test="studentid != null">AND student_id = #{studentid}</if>
+            <if test="type != null">AND type = #{type}</if>
+            <if test="date != null">AND date = #{date}</if>
+        </where>
+        LIMIT #{pagesize} OFFSET #{startIndex}
+    </select>
+
+    <select id="queryCount" resultType="int">
+        SELECT COUNT(*) FROM s_attendance
+        <where>
+            <if test="courseid != null">AND course_id = #{courseid}</if>
+            <if test="studentid != null">AND student_id = #{studentid}</if>
+            <if test="type != null">AND type = #{type}</if>
+            <if test="date != null">AND date = #{date}</if>
+        </where>
+    </select>
+
+    <insert id="addAtendance" parameterType="Attendance">
+        INSERT INTO s_attendance(course_id, student_id, type, date)
+        VALUES (#{courseId}, #{studentId}, #{type}, #{date})
+    </insert>
+
+    <delete id="deleteAttendance" parameterType="int">
+        DELETE FROM s_attendance WHERE id = #{id}
+    </delete>
+
+    <select id="isAttendance" parameterType="Attendance" resultType="Attendance">
+        SELECT * FROM s_attendance
+        WHERE course_id = #{courseId} AND student_id = #{studentId}
+          AND type = #{type} AND date = #{date}
+    </select>
+
+</mapper>

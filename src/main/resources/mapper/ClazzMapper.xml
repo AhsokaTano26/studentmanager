@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wdd.studentmanager.mapper.ClazzMapper">
+
+    <resultMap type="com.wdd.studentmanager.domain.Clazz" id="ClazzInfo">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="info" property="info"/>
+    </resultMap>
+
+    <select id="queryList" resultMap="ClazzInfo">
+        SELECT * FROM s_clazz
+        <where>
+            <if test="name != null">AND name LIKE CONCAT('%', #{name}, '%')</if>
+        </where>
+        LIMIT #{pagesize} OFFSET #{startIndex}
+    </select>
+
+    <select id="queryCount" resultType="int">
+        SELECT COUNT(*) FROM s_clazz
+        <where>
+            <if test="name != null">AND name LIKE CONCAT('%', #{name}, '%')</if>
+        </where>
+    </select>
+
+    <insert id="addClazz" parameterType="Clazz">
+        INSERT INTO s_clazz(name, info) VALUES (#{name}, #{info})
+    </insert>
+
+    <delete id="deleteClazz" parameterType="java.util.ArrayList">
+        DELETE FROM s_clazz
+        <where>
+            id IN
+            <foreach collection="list" open="(" close=")" separator="," item="id">
+                #{id}
+            </foreach>
+        </where>
+    </delete>
+
+    <update id="editClazz" parameterType="Clazz">
+        UPDATE s_clazz SET name = #{name}, info = #{info} WHERE id = #{id}
+    </update>
+
+    <select id="findByName" parameterType="String" resultType="Clazz">
+        SELECT * FROM s_clazz WHERE name = #{clazzName}
+    </select>
+
+</mapper>

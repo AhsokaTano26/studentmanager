@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wdd.studentmanager.mapper.StudenetMapper">
+
+    <resultMap type="com.wdd.studentmanager.domain.Student" id="StudentInfo">
+        <result column="id" property="id"/>
+        <result column="sn" property="sn"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="clazz_id" property="clazzId"/>
+        <result column="sex" property="sex"/>
+        <result column="mobile" property="mobile"/>
+        <result column="qq" property="qq"/>
+        <result column="photo" property="photo"/>
+    </resultMap>
+
+    <!-- 分页查询（openGauss 修正版） -->
+    <select id="queryList" resultMap="StudentInfo">
+        SELECT *
+        FROM s_student
+        <where>
+            <if test="username != null">
+                AND username LIKE '%' || #{username} || '%'
+            </if>
+            <if test="clazzid != null">
+                AND clazz_id LIKE '%' || #{clazzid} || '%'
+            </if>
+            <if test="studentid != null">
+                AND id = #{studentid}
+            </if>
+        </where>
+        LIMIT #{pagesize} OFFSET #{startIndex}
+    </select>
+
+    <!-- 统计数量 -->
+    <select id="queryCount" resultType="int">
+        SELECT count(*)
+        FROM s_student
+        <where>
+            <if test="username != null">
+                AND username LIKE '%' || #{username} || '%'
+            </if>
+            <if test="clazzid != null">
+                AND clazz_id LIKE '%' || #{clazzid} || '%'
+            </if>
+            <if test="studentid != null">
+                AND id = #{studentid}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addStudent" parameterType="Student">
+        INSERT INTO s_student(sn, username, password, clazz_id, sex, mobile, qq, photo)
+        VALUES(#{sn}, #{username}, #{password}, #{clazzId}, #{sex}, #{mobile}, #{qq}, #{photo})
+    </insert>
+
+    <delete id="deleteStudent" parameterType="java.util.ArrayList">
+        DELETE FROM s_student
+        <where>
+            id IN
+            <foreach collection="list" open="(" close=")" separator="," item="id">
+                #{id}
+            </foreach>
+        </where>
+    </delete>
+
+    <update id="editStudent" parameterType="Student">
+        UPDATE s_student
+        <set>
+            <if test="username != null"> username = #{username}, </if>
+            <if test="clazzId != null"> clazz_id = #{clazzId}, </if>
+            <if test="sex != null"> sex = #{sex}, </if>
+            <if test="mobile != null"> mobile = #{mobile}, </if>
+            <if test="qq != null"> qq = #{qq}, </if>
+            <if test="photo != null"> photo = #{photo}, </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <select id="findById" parameterType="int" resultType="Student">
+        SELECT * FROM s_student WHERE id = #{sid}
+    </select>
+
+    <select id="findByStudent" parameterType="Student" resultType="Student">
+        SELECT * FROM s_student
+        WHERE username = #{username} AND password = #{password}
+    </select>
+
+    <select id="isStudentByClazzId" parameterType="int" resultMap="StudentInfo">
+        SELECT * FROM s_student WHERE clazz_id = #{id}
+    </select>
+
+    <update id="editPswdByStudent" parameterType="Student">
+        UPDATE s_student SET password = #{password} WHERE id = #{id}
+    </update>
+
+    <select id="findByName" parameterType="java.lang.String" resultType="int">
+        SELECT id FROM s_student WHERE username = #{name}
+    </select>
+
+</mapper>

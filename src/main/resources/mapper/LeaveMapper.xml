@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wdd.studentmanager.mapper.LeaveMapper">
+
+    <resultMap type="com.wdd.studentmanager.domain.Leave" id="LeaveInfo">
+        <result column="id" property="id"/>
+        <result column="student_id" property="studentId"/>
+        <result column="info" property="info"/>
+        <result column="status" property="status"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+    <select id="queryList" resultMap="LeaveInfo">
+        SELECT * FROM s_leave
+        <where>
+            <if test="studentId != null">AND student_id = #{studentId}</if>
+        </where>
+        LIMIT #{pagesize} OFFSET #{startIndex}
+    </select>
+
+    <select id="queryCount" resultType="int">
+        SELECT COUNT(*) FROM s_leave
+        <where>
+            <if test="studentId != null">AND student_id = #{studentId}</if>
+        </where>
+    </select>
+
+    <insert id="addLeave" parameterType="Leave">
+        INSERT INTO s_leave(student_id, info) VALUES (#{studentId}, #{info})
+    </insert>
+
+    <delete id="deleteLeave" parameterType="int">
+        DELETE FROM s_leave WHERE id = #{id}
+    </delete>
+
+    <update id="editLeave" parameterType="Leave">
+        UPDATE s_leave SET student_id = #{studentId}, info = #{info} WHERE id = #{id}
+    </update>
+
+    <update id="checkLeave" parameterType="Leave">
+        UPDATE s_leave SET student_id = #{studentId}, info = #{info},
+                           status = #{status}, remark = #{remark}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

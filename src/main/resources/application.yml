@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    # openGauss 驱动
+    driver-class-name: org.opengauss.Driver
+
+    # openGauss 连接 URL
+    url: jdbc:opengauss://127.0.0.1:5432/studentmanager
+
+    # openGauss 用户名密码，根据你的实际情况修改
+    username: springboot
+    password: 159357RRrr
+
+  servlet:
+    multipart:
+      max-file-size: 30Mb
+      max-request-size: 30Mb
+
+mybatis:
+  type-aliases-package: com.wdd.studentmanager.domain
+  mapper-locations: classpath:mapper/*.xml
+
