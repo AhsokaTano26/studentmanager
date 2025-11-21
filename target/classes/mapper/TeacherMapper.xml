@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wdd.studentmanager.mapper.TeacherMapper">
+
+    <resultMap type="com.wdd.studentmanager.domain.Teacher" id="TeacherInfo">
+        <result column="id" property="id"/>
+        <result column="sn" property="sn"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="clazz_id" property="clazzId"/>
+        <result column="sex" property="sex"/>
+        <result column="mobile" property="mobile"/>
+        <result column="qq" property="qq"/>
+        <result column="photo" property="photo"/>
+    </resultMap>
+
+    <select id="queryList" resultMap="TeacherInfo">
+        SELECT * FROM s_teacher
+        <where>
+            <if test="username != null">AND username LIKE CONCAT('%', #{username}, '%')</if>
+            <if test="clazzid != null">AND clazz_id LIKE CONCAT('%', #{clazzid}, '%')</if>
+            <if test="teacherid != null">AND id = #{teacherid}</if>
+        </where>
+        LIMIT #{pagesize} OFFSET #{startIndex}
+    </select>
+
+    <select id="queryCount" resultType="int">
+        SELECT COUNT(*) FROM s_teacher
+        <where>
+            <if test="username != null">AND username LIKE CONCAT('%', #{username}, '%')</if>
+            <if test="clazzid != null">AND clazz_id LIKE CONCAT('%', #{clazzid}, '%')</if>
+            <if test="teacherid != null">AND id = #{teacherid}</if>
+        </where>
+    </select>
+
+    <insert id="addTeacher" parameterType="Teacher">
+        INSERT INTO s_teacher(sn, username, password, clazz_id, sex, mobile, qq, photo)
+        VALUES (#{sn}, #{username}, #{password}, #{clazzId}, #{sex}, #{mobile}, #{qq}, #{photo})
+    </insert>
+
+    <delete id="deleteTeacher" parameterType="java.util.ArrayList">
+        DELETE FROM s_teacher
+        <where>
+            id IN
+            <foreach collection="list" open="(" close=")" separator="," item="id">
+                #{id}
+            </foreach>
+        </where>
+    </delete>
+
+    <update id="editTeacher" parameterType="Teacher">
+        UPDATE s_teacher
+        <set>
+            <if test="username != null">username = #{username},</if>
+            <if test="clazzId != null">clazz_id = #{clazzId},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="mobile != null">mobile = #{mobile},</if>
+            <if test="qq != null">qq = #{qq},</if>
+            <if test="photo != null">photo = #{photo},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <select id="findById" parameterType="int" resultType="Teacher">
+        SELECT * FROM s_teacher WHERE id = #{tid}
+    </select>
+
+    <select id="findByTeacher" parameterType="Teacher" resultType="Teacher">
+        SELECT * FROM s_teacher WHERE username = #{username} AND password = #{password}
+    </select>
+
+    <update id="editPswdByTeacher" parameterType="Teacher">
+        UPDATE s_teacher SET password = #{password} WHERE id = #{id}
+    </update>
+</mapper>
