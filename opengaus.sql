@@ -177,3 +177,51 @@ INSERT INTO studentmanager.s_score (id, student_id, course_id, score, remark) VA
 
 INSERT INTO studentmanager.s_selected_course (id, student_id, course_id) VALUES
                                                                              (18, 2, 1), (19, 2, 2), (20, 2, 3), (21, 4, 3), (22, 4, 2), (24, 9, 1);
+
+-- 1. 班级表 (s_clazz)
+CREATE SEQUENCE studentmanager.s_clazz_id_seq;
+ALTER TABLE studentmanager.s_clazz ALTER COLUMN id SET DEFAULT nextval('studentmanager.s_clazz_id_seq');
+SELECT setval('studentmanager.s_clazz_id_seq', 5, true); -- Max ID is 5
+
+-- 2. 管理员表 (s_admin)
+CREATE SEQUENCE studentmanager.s_admin_id_seq;
+ALTER TABLE studentmanager.s_admin ALTER COLUMN id SET DEFAULT nextval('studentmanager.s_admin_id_seq');
+SELECT setval('studentmanager.s_admin_id_seq', 1, true); -- Max ID is 1
+
+-- 3. 教师表 (s_teacher)
+CREATE SEQUENCE studentmanager.s_teacher_id_seq;
+ALTER TABLE studentmanager.s_teacher ALTER COLUMN id SET DEFAULT nextval('studentmanager.s_teacher_id_seq');
+SELECT setval('studentmanager.s_teacher_id_seq', 18, true); -- Max ID is 18
+
+-- 4. 学生表 (s_student)
+CREATE SEQUENCE studentmanager.s_student_id_seq;
+ALTER TABLE studentmanager.s_student ALTER COLUMN id SET DEFAULT nextval('studentmanager.s_student_id_seq');
+SELECT setval('studentmanager.s_student_id_seq', 9, true); -- Max ID is 9
+
+-- 5. 课程表 (s_course)
+CREATE SEQUENCE studentmanager.s_course_id_seq;
+ALTER TABLE studentmanager.s_course ALTER COLUMN id SET DEFAULT nextval('studentmanager.s_course_id_seq');
+SELECT setval('studentmanager.s_course_id_seq', 3, true); -- Max ID is 3
+
+-- 6. 考勤表 (s_attendance)
+CREATE SEQUENCE studentmanager.s_attendance_id_seq;
+ALTER TABLE studentmanager.s_attendance ALTER COLUMN id SET DEFAULT nextval('studentmanager.s_attendance_id_seq');
+SELECT setval('studentmanager.s_attendance_id_seq', 15, true); -- Max ID is 15
+
+-- 7. 请假表 (s_leave)
+CREATE SEQUENCE studentmanager.s_leave_id_seq;
+ALTER TABLE studentmanager.s_leave ALTER COLUMN id SET DEFAULT nextval('studentmanager.s_leave_id_seq');
+SELECT setval('studentmanager.s_leave_id_seq', 13, true); -- Max ID is 13
+
+-- 8. 成绩表 (s_score)
+CREATE SEQUENCE studentmanager.s_score_id_seq;
+ALTER TABLE studentmanager.s_score ALTER COLUMN id SET DEFAULT nextval('studentmanager.s_score_id_seq');
+SELECT setval('studentmanager.s_score_id_seq', 68, true); -- Max ID is 68
+
+-- 9. 选课表 (s_selected_course)
+CREATE SEQUENCE studentmanager.s_selected_course_id_seq;
+ALTER TABLE studentmanager.s_selected_course ALTER COLUMN id SET DEFAULT nextval('studentmanager.s_selected_course_id_seq');
+SELECT setval('studentmanager.s_selected_course_id_seq', 24, true); -- Max ID is 24
+
+-- 统一授予 springboot 用户对所有新创建序列的 USAGE 权限
+GRANT USAGE ON ALL SEQUENCES IN SCHEMA studentmanager TO springboot;
